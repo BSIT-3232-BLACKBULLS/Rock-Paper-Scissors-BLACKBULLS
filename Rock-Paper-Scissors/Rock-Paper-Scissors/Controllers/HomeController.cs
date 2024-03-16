@@ -1,32 +1,38 @@
 using Microsoft.AspNetCore.Mvc;
-using Rock_Paper_Scissors.Models;
-using System.Diagnostics;
 
-namespace Rock_Paper_Scissors.Controllers
+namespace RockPaperScissors.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult Privacy()
+        [HttpPost]
+        public IActionResult Play(string playerChoice)
         {
-            return View();
+            string computerChoice = GetComputerChoice();
+            string result = GetGameResult(playerChoice, computerChoice);
+            return Content(result);
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        private string GetComputerChoice()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            string[] choices = { "rock", "paper", "scissors" };
+            return choices[new System.Random().Next(choices.Length)];
+        }
+
+        private string GetGameResult(string playerChoice, string computerChoice)
+        {
+            if (playerChoice == computerChoice)
+                return "It's a tie!";
+            else if ((playerChoice == "rock" && computerChoice == "scissors") ||
+                     (playerChoice == "paper" && computerChoice == "rock") ||
+                     (playerChoice == "scissors" && computerChoice == "paper"))
+                return "You win!";
+            else
+                return "Computer wins!";
         }
     }
 }

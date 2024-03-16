@@ -1,8 +1,84 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Black Bulls Rock Paper Scissors</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #2b2b2b;
+            color: #FFFFFF;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+        h1 {
+            margin-top: 50px;
+            font-size: 48px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: #FFBC42;
+        }
+
+        #logo {
+            width: 200px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        #game-container {
+            margin-top: 50px;
+        }
+
+        button {
+            background-color: #FFBC42;
+            color: #2b2b2b;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            margin: 0 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+            button:hover {
+                background-color: #FFD56A;
+            }
+
+        #result {
+            font-size: 24px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Black Bulls Rock Paper Scissors</h1>
+    <img src="https://i.ibb.co/pvDh9Q0/blackbulls-logo.png" alt="Black Bulls Logo" id="logo">
+    <div id="game-container">
+        <button onclick="play('rock')">Rock</button>
+        <button onclick="play('paper')">Paper</button>
+        <button onclick="play('scissors')">Scissors</button>
+    </div>
+    <div id="result"></div>
+
+    <script>
+        function play(playerChoice) {
+            var choices = ['rock', 'paper', 'scissors'];
+            var computerChoice = choices[Math.floor(Math.random() * choices.length)];
+
+            var result;
+            if (playerChoice === computerChoice) {
+                result = "It's a tie!";
+            } else if ((playerChoice === 'rock' && computerChoice === 'scissors') ||
+                (playerChoice === 'paper' && computerChoice === 'rock') ||
+                (playerChoice === 'scissors' && computerChoice === 'paper')) {
+                result = "You win!";
+            } else {
+                result = "You lose!";
+            }
+
+            document.getElementById('result').innerHTML = "You chose " + playerChoice + ", computer chose " + computerChoice + ". " + result;
+        }
+    </script>
+</body>
+</html>
